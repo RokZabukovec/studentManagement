@@ -125,7 +125,6 @@ class DB{
             try{
                 $primary_key = "tables/{$table}/primary_key";
                 self::getInstance()->delete($table, array(Config::get($primary_key), '=', $id));
-                Redirect::to('students');
             }catch(PDOException $exception){
                 echo $exception->getMessage();
             }
