@@ -7,20 +7,20 @@
  */
 
 class Student{
-
-
-    public static function delete($id){
-        if(Session::exists('user')){
-            try{
-                DB::getInstance()->delete(Config::get('tables/students/name'), array(Config::get('tables/students/primary_key'), '=', $id));
-            }catch(PDOException $exception){
-                $exception->getMessage();
-            }finally{
-                Redirect::to('students');
-            }
-
-        }else{
-            Redirect::to('login');
-        }
+    public static function showExams($subject_id){
+       $exams = DB::getInstance()->get('exams', array('subject_id', '=', $subject_id))->all();
+       if(!empty($exams)){
+           return $exams;
+       }else{
+           return false;
+       }
     }
+    public static function studentExam($student_id, $exam_id){
+        DB::getInstance()->insert('student_exam_registration', array(
+            'student_id' => $student_id,
+            'exam_id'  => $exam_id
+        ));
+    }
+
+
 }

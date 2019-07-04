@@ -119,6 +119,21 @@ class DB{
     public function delete($table, $where){
         return $this->action('DELETE', $table, $where);
     }
+
+    public function delete_by_id($table, $id){
+        if(Session::exists('user')){
+            try{
+                $primary_key = "tables/{$table}/primary_key";
+                self::getInstance()->delete($table, array(Config::get($primary_key), '=', $id));
+                Redirect::to('students');
+            }catch(PDOException $exception){
+                echo $exception->getMessage();
+            }
+        }else{
+            Redirect::to('login');
+        }
+    }
+
     public function insert($table, $fields = array()){
         if(count($fields)){
             $keys = array_keys($fields);

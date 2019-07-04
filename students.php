@@ -112,7 +112,7 @@ if(Input::exists()){
     if ($students){
         echo "<table class='table'>";
         echo "<thead class='thead-light'>";
-            echo "<tr> <th scope='col'>Firstname</th><th scope='col'>Lastname</th><th scope='col'>Birthday</th><th scope='col'>Address</th><th scope='col'>Program</th><th scope='col'>Delete</th><th scope='col'>Details</th></tr>";
+            echo "<tr> <th scope='col'>Firstname</th><th scope='col'>Lastname</th><th scope='col'>Birthday</th><th scope='col'>Address</th><th scope='col'>Program</th><th scope='col'>Action</th></tr>";
         echo "</thead>";
         echo "<tbody>";
         foreach ($students as $student){
@@ -123,8 +123,13 @@ if(Input::exists()){
                 "<td>"  . $student->birthday    . "</td>".
                 "<td>"  . $student->address     . "</td>" .
                 "<td>"  . $program              . "</td>";
-            echo "<td><a class='btn btn-primary deleteBtn' href='delete.php?student_id=". $student->student_id ."'>Delete</a></td>";
-            echo "<td><a href='singleStudent.php?student_id=" . $student->student_id . "'>View profile</a></td>";
+            echo "<td><div class='dropdown'>";
+            echo "<button class='btn btn-secondary dropdown-toggle' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'> Action</button>";
+               echo "<div class='dropdown-menu' aria-labelledby='dropdownMenuButton'>";
+                 echo "<a class='dropdown-item' href='delete.php?student_id=". $student->student_id ."'>Delete</a>";
+                echo "<a class='dropdown-item' href='singleStudent.php?student_id=" . $student->student_id . "'>View</a>";
+               echo "</div>";
+             echo "</div></td>";
             echo "</tr>";
         }
         echo "</tbody>";

@@ -95,15 +95,20 @@ if(Input::exists()){
             Session::flash('Inserted');
             echo "<table class='table'>";
             echo "<thead class='thead-light'>";
-            echo "<tr> <th>Title</th><th>Semester</th><th>Hours</th><th>Program</th><th>Delete</th><th>Details</th></tr>";
+            echo "<tr> <th>Title</th><th>Semester</th><th>Hours</th><th>Program</th><th>Action</th></tr>";
             echo "</thead>";
             foreach ($subjects as $subject){
                 $program = DB::getInstance()->get('programs', array('program_id', '=', $subject->program_id))->first()->program_name;
                 echo "<tr>";
                 echo "<td>" . $subject->title . "</td>" .
                     "<td>" . $subject->semester . "</td>" .  "<td>" . $subject->hours . "</td>".  "<td>" . $program . "</td>";
-                echo "<td><a class='btn btn-primary' href='delete.php?subject_id=". $subject->subject_id ."'>Delete</a></td>";
-                echo "<td><a href='singleSubject.php?subject_id=" . $subject->subject_id . "'>View subject</a></td>";
+                echo "<td><div class='dropdown'>";
+                echo "<button class='btn btn-secondary dropdown-toggle' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'> Action</button>";
+                echo "<div class='dropdown-menu' aria-labelledby='dropdownMenuButton'>";
+                echo "<a class='dropdown-item' href='delete.php?subject_id=". $subject->subject_id ."'>Delete</a>";
+                echo "<a class='dropdown-item' href='singleSubject.php?subject_id=" . $subject->subject_id . "'>View</a>";
+                echo "</div>";
+                echo "</div></td>";
                 echo "</tr>";
             }
             echo "</table>";
@@ -115,5 +120,6 @@ if(Input::exists()){
         }
     }
     ?>
+    <?php require_once 'includes/scripts.php' ?>
 </body>
 </html>

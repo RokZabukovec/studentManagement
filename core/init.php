@@ -53,6 +53,10 @@ $GLOBALS['config'] = array(
         'programs' => array(
             'name' => 'programs',
             'primary_key' => 'program_id'
+        ),
+        'exams' => array(
+            'name' => 'exams',
+            'primary_key' => 'exam_id'
         )
     )
 );

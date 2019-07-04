@@ -13,8 +13,12 @@ class Redirect{
                     self::to('index');
             }
         }else{
-            $location  .=  '.php';
-            header("Location: {$location}");
+            if(strpos($location, ".php") !== false){
+                header("Location: {$location}");
+            }else{
+                $location  .=  '.php';
+                header("Location: {$location}");
+            }
             exit;
         }
 
