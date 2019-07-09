@@ -71,6 +71,4 @@ $exams = DB::getInstance()->get('exams', array('subject_id', '=', $subject->subj
             </div>
         </form>
     </div>
-    <?php require_once 'includes/scripts.php' ?>
-</body>
-</html>
+    <?php require_once 'includes/footer.php' ?>

@@ -5,7 +5,6 @@ if(Session::exists('success')){
     echo Session::flash('success');
 }
 if(Session::exists('user')){
-    loggedInMenu();
     functionsMenu();
     $user = new User();
     echo "<h3>Hello {$user->data()->username}</h3>";
@@ -13,7 +12,6 @@ if(Session::exists('user')){
 }else{
     loggedOutMenu();
 }
-
 ?>
-    </body>
-</html>
+
+<?php include 'includes/footer.php';?>

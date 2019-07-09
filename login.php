@@ -24,7 +24,7 @@ if(Input::exists()){
            $remember = (Input::get('remember') == 'on') ? true : false;
            $login = $user->login(Input::get('username'), Input::get('password'), $remember);
            if($login){
-               Redirect::to('profile');
+               Redirect::to('index');
            }else{
                Redirect::to('login');
            }
@@ -36,11 +36,10 @@ if(Input::exists()){
     }
 
 }
-
 ?>
 
 
-<?php include 'includes/header.php'; include 'includes/nav.php'; ?>
+<?php include 'includes/header.php'; ?>
     <form action="" method="POST">
         <div class="form-field">
             <label for="username">Username</label>
@@ -61,5 +60,4 @@ if(Input::exists()){
             <input type="submit" name="submit">
         </div>
     </form>
-</body>
-</html>
+    <?php include 'includes/footer.php'?>

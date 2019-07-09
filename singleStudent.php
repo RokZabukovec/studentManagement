@@ -20,7 +20,8 @@ require_once 'core/init.php';
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <?php require_once 'includes/style.php' ?>
+    <link rel="stylesheet" href="/public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/public/css/style.css">
     <script>
         function loadExams(subject){
                 let ajaxReq = new XMLHttpRequest();
@@ -40,7 +41,6 @@ require_once 'core/init.php';
 <body>
     <?php
     if(Session::exists('user')){
-        loggedInMenu();
         functionsMenu();
 
         echo "<h1>{$students->first_name} {$students->last_name}</h1>";
@@ -62,6 +62,4 @@ require_once 'core/init.php';
     <p id="output">
 
     </p>
-    <?php require_once 'includes/scripts.php' ?>
-</body>
-</html>
+    <?php include 'includes/footer.php';?>

@@ -46,21 +46,15 @@ if(Input::exists()){
 
 ?>
 <?php include 'includes/header.php'?>
-<h1>Students</h1>
 <?php
     if(Session::exists('user')){
-        loggedInMenu();
         functionsMenu();
     }else{
         Redirect::to('login');
     }
 ?>
+    <h1>Students</h1>
     <div class="row">
-        <?php
-        if(Session::exists('Inserted')){
-            Session::flash('Inserted');
-        }
-        ?>
         <form action="" method="POST" class="col-md-6 col-sm-12">
             <div class="form-group form-field">
                 <label for="first_name">First name</label>
@@ -131,6 +125,4 @@ if(Input::exists()){
 
 
     ?>
-<?php require_once 'includes/scripts.php' ?>
-</body>
-</html>
+<?php require_once 'includes/footer.php' ?>

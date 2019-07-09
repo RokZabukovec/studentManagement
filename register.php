@@ -92,5 +92,4 @@ if(Input::exists()) {
                 <input type="submit" name="submit">
             </div>
         </form>
-    </body>
-</html>
+<?php include 'includes/footer.php';?>

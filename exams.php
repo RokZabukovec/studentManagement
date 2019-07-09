@@ -20,6 +20,4 @@ if(isset($_REQUEST['subject_id'])){
    }else{
        echo "No exams found";
    }
-
-
 }

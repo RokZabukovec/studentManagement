@@ -38,16 +38,14 @@ if(Input::exists()){
 }
 ?>
 <?php include 'includes/header.php'?>
-    <div class="container">
-        <h1>Subjects</h1>
         <?php
         if(Session::exists('user')){
-            loggedInMenu();
             functionsMenu();
         }else{
             Redirect::to('index');
         }
         ?>
+        <h1>Subjects</h1>
         <form action="" method="POST" class="col-md-6 col-sm-12">
             <div class="form-group form-field">
                 <label for="title">Title</label>
@@ -63,7 +61,7 @@ if(Input::exists()){
             </div>
             <div class="form-group form-field input-group">
                 <label for="program_id">Program</label>
-                <select class="custom-select" name="program_id">
+                <select class="custom-select" id="program_id" name="program_id" style="display:block">
                     <?php
                     $programs = DB::getInstance()->query("SELECT * FROM " . Config::get('tables/programs/name') )->all();
                     foreach($programs as $program){
@@ -76,7 +74,6 @@ if(Input::exists()){
                 <input class="btn btn-primary" type="submit" name="submit" value="Save">
             </div>
         </form>
-    </div>
     <?php
     if(Session::exists('user')){
         $subjects = DB::getInstance()->query("SELECT * FROM subjects")->all();
@@ -110,6 +107,4 @@ if(Input::exists()){
         }
     }
     ?>
-    <?php require_once 'includes/scripts.php' ?>
-</body>
-</html>
+    <?php require_once 'includes/footer.php' ?>
