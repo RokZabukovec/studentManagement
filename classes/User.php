@@ -53,7 +53,7 @@ class User{
                    }
                }
                Session::flash('Logged in', 'You are logged in.');
-               Redirect::to('profile');
+               Redirect::to('index');
                 return true;
             }
         }

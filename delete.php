@@ -12,7 +12,7 @@ if(Session::exists('user')){
         unset($_GET);
     }elseif($_GET['exam_id']){
         DB::getInstance()->delete_by_id('exams',(int)$_GET['exam_id']);
-        Redirect::to('login');
+        Redirect::to('subjects');
         unset($_GET);
     }
 }else{

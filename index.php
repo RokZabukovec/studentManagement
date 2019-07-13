@@ -11,6 +11,7 @@ if(Session::exists('user')){
     echo "<h4>Welcome to index page.</h4>";
 }else{
     loggedOutMenu();
+    Redirect::to('login');
 }
 ?>
 

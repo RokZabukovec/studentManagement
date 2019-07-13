@@ -45,40 +45,57 @@ if(Input::exists()){
             Redirect::to('index');
         }
         ?>
-        <h1>Subjects</h1>
-        <form action="" method="POST" class="col-md-6 col-sm-12">
-            <div class="form-group form-field">
-                <label for="title">Title</label>
-                <input class="form-control" type="text" name="title">
+        <div class="page-title flex">
+            <h1>Subjects</h1>
+            <a href="#" class="add-new">New</a>
+        </div>
+        <div class="modal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add new student</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" method="POST">
+                            <div class="form-group form-field">
+                                <label for="title">Title</label>
+                                <input class="form-control" type="text" name="title">
+                            </div>
+                            <div class="form-group form-field">
+                                <label for="semester">Semester</label>
+                                <input class="form-control" type="number" name="semester">
+                            </div>
+                            <div class="form-group form-field">
+                                <label for="hours">Hours</label>
+                                <input class="form-control" type="number" name="hours">
+                            </div>
+                            <div class="form-group form-field input-group">
+                                <label for="program_id">Program</label>
+                                <select class="custom-select" id="program_id" name="program_id" style="display:block">
+                                    <?php
+                                    $programs = DB::getInstance()->query("SELECT * FROM " . Config::get('tables/programs/name') )->all();
+                                    foreach($programs as $program){
+                                        echo "<option value='{$program->program_id}'>{$program->program_name}</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="form-group form-field">
+                                <input class="btn btn-primary" type="submit" name="submit" value="Save">
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="form-group form-field">
-                <label for="semester">Semester</label>
-                <input class="form-control" type="number" name="semester">
-            </div>
-            <div class="form-group form-field">
-                <label for="hours">Hours</label>
-                <input class="form-control" type="number" name="hours">
-            </div>
-            <div class="form-group form-field input-group">
-                <label for="program_id">Program</label>
-                <select class="custom-select" id="program_id" name="program_id" style="display:block">
-                    <?php
-                    $programs = DB::getInstance()->query("SELECT * FROM " . Config::get('tables/programs/name') )->all();
-                    foreach($programs as $program){
-                        echo "<option value='{$program->program_id}'>{$program->program_name}</option>";
-                    }
-                    ?>
-                </select>
-            </div>
-            <div class="form-group form-field">
-                <input class="btn btn-primary" type="submit" name="submit" value="Save">
-            </div>
-        </form>
+        </div>
+
     <?php
     if(Session::exists('user')){
         $subjects = DB::getInstance()->query("SELECT * FROM subjects")->all();
         if($subjects){
-            echo "<div class='container'>";
             Session::flash('Inserted');
             echo "<table class='table'>";
             echo "<thead class='thead-light'>";
@@ -99,11 +116,8 @@ if(Input::exists()){
                 echo "</tr>";
             }
             echo "</table>";
-            echo "</div>";
         }else{
-            echo "<div class='container'>";
-                echo "<h3>No subjects found</h3>";
-            echo "</div>";
+            echo "<h3>No subjects found</h3>";
         }
     }
     ?>

@@ -15,11 +15,13 @@ class Student{
            return false;
        }
     }
+
     public static function studentExam($student_id, $exam_id){
         DB::getInstance()->insert('student_exam_registration', array(
             'student_id' => $student_id,
             'exam_id'  => $exam_id
         ));
+        header("Location:" . $_SERVER['HTTP_REFERER']);
     }
 
 

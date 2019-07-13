@@ -11,4 +11,4 @@
     <link rel="stylesheet" href="../public/css/style.css">
     <title>Student management</title>
 </head>
-<body class="container">
+<body class="container-fluid">
