@@ -31,9 +31,10 @@ if(Input::exists()){
 $exams = DB::getInstance()->get('exams', array('subject_id', '=', $subject->subject_id))->all();
 ?>
         <?php functionsMenu(); ?>
+        <div class="container">
         <div class="page-title flex">
             <?php echo "<h1>{$subject->title}</h1>"?>
-            <a href="#" class="add-new">New</a>
+            <a href="#" class="add-new">New exam</a>
         </div>
         <?php
         if($exams){
@@ -58,7 +59,7 @@ $exams = DB::getInstance()->get('exams', array('subject_id', '=', $subject->subj
             echo "<h3>Subject has no exams.</h3>";
         }
         ?>
-
+        </div>
     <div class="modal">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

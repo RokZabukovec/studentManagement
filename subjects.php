@@ -20,7 +20,11 @@ if(Input::exists()){
             'required'   => true,
         ),
         'program_id' => array(
-            'input_name' => 'Program',
+        'input_name' => 'Program',
+        'required'   => true,
+    ),
+        'professor_id' => array(
+            'input_name' => 'Professor',
             'required'   => true,
         )
     ));
@@ -30,8 +34,8 @@ if(Input::exists()){
             'semester'  => Input::get('semester'),
             'hours'   => Input::get('hours'),
             'program_id' => Input::get('program_id'),
+            'professor_id' => Input::get('professor_id'),
         ));
-        Session::flash('Inserted', 'Record was inserted');
     }else{
         die("Validation failed");
     }
@@ -45,80 +49,103 @@ if(Input::exists()){
             Redirect::to('index');
         }
         ?>
-        <div class="page-title flex">
-            <h1>Subjects</h1>
-            <a href="#" class="add-new">New</a>
-        </div>
-        <div class="modal">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Add new student</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="" method="POST">
-                            <div class="form-group form-field">
-                                <label for="title">Title</label>
-                                <input class="form-control" type="text" name="title">
-                            </div>
-                            <div class="form-group form-field">
-                                <label for="semester">Semester</label>
-                                <input class="form-control" type="number" name="semester">
-                            </div>
-                            <div class="form-group form-field">
-                                <label for="hours">Hours</label>
-                                <input class="form-control" type="number" name="hours">
-                            </div>
-                            <div class="form-group form-field input-group">
-                                <label for="program_id">Program</label>
-                                <select class="custom-select" id="program_id" name="program_id" style="display:block">
-                                    <?php
-                                    $programs = DB::getInstance()->query("SELECT * FROM " . Config::get('tables/programs/name') )->all();
-                                    foreach($programs as $program){
-                                        echo "<option value='{$program->program_id}'>{$program->program_name}</option>";
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                            <div class="form-group form-field">
-                                <input class="btn btn-primary" type="submit" name="submit" value="Save">
-                            </div>
-                        </form>
+
+
+            <div class="dark-screen"></div>
+            <div class="modal">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Add new student</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" method="POST">
+                                <div class="form-group form-field">
+                                    <label for="title">Title</label>
+                                    <input class="form-control" type="text" name="title">
+                                </div>
+                                <div class="form-group form-field">
+                                    <label for="semester">Semester</label>
+                                    <input class="form-control" type="number" name="semester">
+                                </div>
+                                <div class="form-group form-field">
+                                    <label for="hours">Hours</label>
+                                    <input class="form-control" type="number" name="hours">
+                                </div>
+                                <div class="form-group form-field input-group">
+                                    <label for="program_id">Program</label>
+                                    <select class="custom-select" id="program_id" name="program_id" style="display:block">
+                                        <?php
+                                        $programs = DB::getInstance()->query("SELECT * FROM " . Config::get('tables/programs/name') )->all();
+                                        foreach($programs as $program){
+                                            echo "<option value='{$program->program_id}'>{$program->program_name}</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="form-group form-field input-group">
+                                    <label for="professor_id">Professor</label>
+                                    <select class="custom-select" id="professor_id" name="professor_id" style="display:block">
+                                        <?php
+                                        $professors = DB::getInstance()->query("SELECT * FROM " . Config::get('tables/professors/name') )->all();
+                                        foreach($professors as $professor){
+                                            echo "<option value='{$professor->professor_id}'>{$professor->first_name} {$professor->last_name}</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="form-group form-field">
+                                    <input class="btn btn-primary" type="submit" name="submit" value="Save">
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+
 
     <?php
     if(Session::exists('user')){
         $subjects = DB::getInstance()->query("SELECT * FROM subjects")->all();
+
         if($subjects){
-            Session::flash('Inserted');
-            echo "<table class='table'>";
-            echo "<thead class='thead-light'>";
-            echo "<tr> <th>Title</th><th>Semester</th><th>Hours</th><th>Program</th><th>Action</th></tr>";
-            echo "</thead>";
+            echo '<div class="container">';
+            echo '<div class="page-title flex">';
+            echo '<h1>Subjects</h1>';
+            echo '<a href="#" class="add-new">New</a>';
+            echo '</div>';
+
             foreach ($subjects as $subject){
                 $program = DB::getInstance()->get('programs', array('program_id', '=', $subject->program_id))->first()->program_name;
-                echo "<tr>";
-                echo "<td>" . $subject->title . "</td>" .
-                    "<td>" . $subject->semester . "</td>" .  "<td>" . $subject->hours . "</td>".  "<td>" . $program . "</td>";
-                echo "<td><div class='dropdown'>";
+
+                echo "<div class='student-card flex justify-content-between align-center'>";
+                echo "<div class='basic-info'>";
+                echo "<h3>{$subject->title}</h3>";
+                echo "<p class='color-lighter'>{$program}</p>";
+                echo "</div>";
+
+                echo "<ul>";
+                echo "<li>Semester: {$subject->semester}</li>";
+                echo "<li>Hours: {$subject->hours}</li>";
+                echo "</ul>";
+
+                echo "<div class='dropdown'>";
                 echo "<button class='btn btn-secondary dropdown-toggle' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'> Action</button>";
                 echo "<div class='dropdown-menu' aria-labelledby='dropdownMenuButton'>";
-                echo "<a class='dropdown-item' href='delete.php?subject_id=". $subject->subject_id ."'>Delete</a>";
+                echo "<a class='warning dropdown-item deleteBtn' href='delete.php?subject_id=". $subject->subject_id  ."'>Delete</a>";
                 echo "<a class='dropdown-item' href='singleSubject.php?subject_id=" . $subject->subject_id . "'>View</a>";
                 echo "</div>";
-                echo "</div></td>";
-                echo "</tr>";
+                echo "</div>";
+                echo "</div>";
             }
-            echo "</table>";
         }else{
             echo "<h3>No subjects found</h3>";
         }
     }
+    echo "</div>";
     ?>
+
     <?php require_once 'includes/footer.php' ?>

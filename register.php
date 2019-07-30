@@ -1,5 +1,5 @@
 <?php
-    require_once 'core/init.php';
+require_once 'core/init.php';
 
 if(Input::exists()) {
     if(Token::check(Input::get('CSRFtoken'))){
@@ -48,7 +48,7 @@ if(Input::exists()) {
                     'joined'    => date("Y-m-d H:i:s"),
                     'job_title' => 1
                 ));
-                Session::flash('success', 'Registration is a success.');
+                Session::flash('Success', 'Registration is a success.');
                 Redirect::to('index');
             }catch(Exception $e){
                 Redirect::to(404);
@@ -59,7 +59,6 @@ if(Input::exists()) {
 }
 ?>
 
-    <?php include 'includes/nav.php'?>
     <?php include 'includes/header.php'?>
         <form action="" method="post">
             <div class="form-field">

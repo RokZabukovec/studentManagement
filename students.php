@@ -3,7 +3,10 @@ require_once 'core/init.php';
 if(isset($_GET['exam_id'])){
     Student::studentExam($_SESSION['student_id'], $_REQUEST['exam_id']);
 }
-
+if(isset($_REQUEST['unregister_exam_id'])){
+    DB::getInstance()->query("DELETE FROM student_exam_registration WHERE exam_id = {$_REQUEST['unregister_exam_id']} AND student_id = {$_SESSION['student_id']}");
+    Redirect::to("singleStudent.php?student_id={$_SESSION['student_id']}");
+}
 if(Input::exists()){
     $validate = new Validation();
     $validation = $validate->check($_POST, array(
@@ -52,7 +55,7 @@ if(Input::exists()){
         Redirect::to('login');
     }
 ?>
-
+<div class="dark-screen"></div>
     <div class="row">
         <div class="modal">
             <div class="modal-dialog" role="document">
@@ -94,7 +97,6 @@ if(Input::exists()){
                         </div>
                         <div class="form-group form-field modal-footer">
                             <input class="btn btn-primary" type="submit" name="submit" value="Save">
-                            <button type="button" class="btn btn-secondary close-modal" data-dismiss="modal">Close</button>
                         </div>
                     </form>
                     </div>
@@ -130,7 +132,7 @@ if(Input::exists()){
                 echo "<div class='dropdown'>";
                     echo "<button class='btn btn-secondary dropdown-toggle' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'> Action</button>";
                     echo "<div class='dropdown-menu' aria-labelledby='dropdownMenuButton'>";
-                        echo "<a class='dropdown-item' href='delete.php?student_id=". $student->student_id ."'>Delete</a>";
+                        echo "<a class='dropdown-item warning' href='delete.php?student_id=". $student->student_id ."'>Delete</a>";
                         echo "<a class='dropdown-item' href='singleStudent.php?student_id=" . $student->student_id . "'>View</a>";
                     echo "</div>";
                 echo "</div>";
