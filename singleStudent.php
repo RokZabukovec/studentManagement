@@ -18,7 +18,7 @@ if(isset($_GET['exam_id'])){
             'student_id' => $_GET['student_id'],
             'exam_id'    => $examID
     ));
-    Redirect::to('singleStudent.php?student_id=' . $_SESSION['student_id']);
+    Redirect::to('singleStudent.php?student_id=' . $_/['student_id']);
 }
 
 ?>

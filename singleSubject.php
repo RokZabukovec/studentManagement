@@ -4,6 +4,7 @@
 <?php
 
 $subject = $_GET['subject_id'];
+Session::put('subject', $_GET['subject_id']);
 $subject = DB::getInstance()->get('subjects', array('subject_id', '=', $subject))->first();
 if(Input::exists()){
     $validate = new Validation();
@@ -23,15 +24,25 @@ if(Input::exists()){
             'duration'  => Input::get('duration'),
             'subject_id'   => $subject->subject_id
         ));
-        Session::flash('Inserted', 'Record was inserted');
+        Session::put('Inserted', 'Record was inserted');
+        Redirect::to("singleSubject.php?subject_id={$_SESSION['subject']}");
     }else{
-        die(Input::get('duration'));
+        Session::put('Inserted', 'Record was not inserted');
     }
 }
 $exams = DB::getInstance()->get('exams', array('subject_id', '=', $subject->subject_id))->all();
 ?>
         <?php functionsMenu(); ?>
         <div class="container">
+            <?php
+            if(Session::exists('Inserted')){
+                if(Session::get('Inserted') == 'Success'){
+                    echo "<div class='animated fadeInRightBig message message-success position-fixed'>" .  Session::flash('Inserted') .  "</div>";
+                }elseif (Session::get('Inserted') == 'Failed'){
+                    echo "<div class='animated fadeInRightBig message message-failed position-fixed'>" .  Session::flash('Inserted') .  "</div>";
+                }
+            }
+            ?>
         <div class="page-title flex">
             <?php echo "<h1>{$subject->title}</h1>"?>
             <a href="#" class="add-new">New exam</a>
@@ -51,7 +62,7 @@ $exams = DB::getInstance()->get('exams', array('subject_id', '=', $subject->subj
                 echo "<tr>";
                 echo "<td>" . $exam->date_time . "</td>";
                 echo "<td>" .$exam->duration . " min</td>";
-                echo "<td><a href='delete.php?exam_id={$exam->exam_id}'>Delete</a></td>";
+                echo "<td><a class='deleteBtn' href='delete.php?exam_id={$exam->exam_id}'>Delete</a></td>";
                 echo "</tr>";
             }
             echo "</table>";
@@ -77,7 +88,7 @@ $exams = DB::getInstance()->get('exams', array('subject_id', '=', $subject->subj
                         </div>
                         <div class="form-group">
                             <label for="duration">Duration</label>
-                            <input class="form-control" type="number" name="duration" min="1" max="60">
+                            <input class="form-control" type="number" name="duration" min="1">
                         </div>
                         <div class="form-group form-field modal-footer">
                             <input class="btn btn-primary" type="submit" name="submit" value="Save">

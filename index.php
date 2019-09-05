@@ -7,8 +7,9 @@ if(Session::exists('success')){
 if(Session::exists('user')){
     functionsMenu();
     $user = new User();
-    echo "<h3>Hello {$user->data()->username}</h3>";
-    echo "<h4>Welcome to index page.</h4>";
+    echo "<div class='flex-column centered'><h3>Hello <span class='warning'>{$user->data()->username}.</span></h3><h4>Welcome to index page.</h4></div>";
+    echo "";
+    echo "";
 }else{
     loggedOutMenu();
     Redirect::to('login');
